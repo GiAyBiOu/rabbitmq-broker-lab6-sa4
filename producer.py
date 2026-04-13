@@ -21,7 +21,7 @@ def create_connection():
     return pika.BlockingConnection(parameters)
 
 def declare_queue(channel):
-    channel.queue_declare(queue='traffic-events-queue', durable=True)
+    channel.queue_declare(queue='gm_lab6', durable=True)
 
 def generate_traffic_event():
     locations = [
@@ -84,7 +84,7 @@ def main():
             
             channel.basic_publish(
                 exchange='',
-                routing_key='traffic-events-queue',
+                routing_key='gm_lab6',
                 body=json.dumps(event),
                 properties=pika.BasicProperties(
                     delivery_mode=2, # make message persistent
@@ -92,7 +92,7 @@ def main():
                 )
             )
             
-            print(f"\n[✓] Message sent successfully to 'traffic-events-queue':")
+            print(f"\n[✓] Message sent successfully to 'gm_lab6':")
             print(json.dumps(event, indent=2))
             
             # Sleep to simulate interval between events

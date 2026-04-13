@@ -49,18 +49,18 @@ def main():
     connection = create_connection()
     channel = connection.channel()
     
-    channel.queue_declare(queue='traffic-events-queue', durable=True)
+    channel.queue_declare(queue='gm_lab6', durable=True)
     
     channel.basic_qos(prefetch_count=1)
     
     channel.basic_consume(
-        queue='traffic-events-queue',
+        queue='gm_lab6',
         on_message_callback=callback,
         auto_ack=False
     )
     
     print("[*] Consumer Started")
-    print("[*] Listening and waiting for messages on 'traffic-events-queue'...")
+    print("[*] Listening and waiting for messages on 'gm_lab6'...")
         
     try:
         channel.start_consuming()

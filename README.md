@@ -15,9 +15,17 @@ This application uses a local RabbitMQ instance (`localhost`) by default. *(Clou
 ### Prerequisites
 
 - **Python 3.8+**
-- **RabbitMQ** installed and running locally on your machine (`localhost:5672`).
+- **Docker & Docker Compose** (to easily run the RabbitMQ broker) or a manual RabbitMQ installation.
 
-### Installation
+### Starting the Broker (Docker)
+
+```bash
+docker-compose up -d
+```
+*(The management UI will be available at http://localhost:15672 with credentials: guest/guest)*
+
+### Installation (Python Scripts)
+
 
 #### On Windows / Linux / macOS
 1. Open your terminal or command prompt.
@@ -80,6 +88,6 @@ To observe how messages are distributed among multiple workers:
 To observe how messages wait in the queue when no one is listening:
 1. Run `python producer.py` and let it generate and send it.
 2. Stop the **Producer**
-3. Keep the **Consumer** closed / terminated completely. The messages are now patiently waiting inside the `traffic-events-queue`.
+3. Keep the **Consumer** closed / terminated completely. The messages are now patiently waiting inside the `gm_lab6` queue.
 4. Run `python consumer.py` to start the consumer.
 5. You will see the consumer instantly "catch up" and process all the accumulated messages back-to-back until the queue is empty.
