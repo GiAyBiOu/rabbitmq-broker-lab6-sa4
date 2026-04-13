@@ -5,7 +5,6 @@ import time
 from datetime import datetime
 
 def create_connection():
-    # Local config
 
     credentials = pika.PlainCredentials('guest', 'guest')
     parameters = pika.ConnectionParameters(

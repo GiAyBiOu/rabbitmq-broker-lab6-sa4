@@ -23,13 +23,10 @@ This application uses a local RabbitMQ instance (`localhost`) by default. *(Clou
 1. Open your terminal or command prompt.
 2. Create and activate a Virtual Environment (**Recommended**):
    ```bash
-   # Windows
-   python -m venv venv
-   .\venv\Scripts\activate
-   
    # Linux / macOS
    python3 -m venv venv
    source venv/bin/activate
+
    # Windows
    .\venv\Scripts\Activate.ps1
    ```
