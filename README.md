@@ -30,6 +30,8 @@ This application uses a local RabbitMQ instance (`localhost`) by default. *(Clou
    # Linux / macOS
    python3 -m venv venv
    source venv/bin/activate
+   # Windows
+   .\venv\Scripts\Activate.ps1
    ```
 3. Install the required dependencies:
    ```bash
@@ -64,8 +66,23 @@ python producer.py
 python3 producer.py
 ```
 
-### Expected Behavior
-- The **Producer** continuously generates JSON objects containing traffic data (e.g., location, speed, vehicle plate, name, weather) and pushes them to the `traffic-events-queue`.
-- The **Consumer** immediately retrieves messages from the queue, returning the consumed JSON details, displaying an acknowledgment message, and showing that it is continuously waiting for new items.
-- If you stop the **Consumer** but leave the **Producer** running, the messages will wait safely in the queue. They will be processed once the Consumer is restarted.
-- Press `CTRL + C` in either terminal window to safely stop the process.
+---
+
+## Experiments and Observation
+
+This broker is set up specifically to allow you to test RabbitMQ's distribution and queuing logic.
+
+### 1. Consumer Distribution (Round Robin)
+To observe how messages are distributed among multiple workers:
+1. Open **three** separate terminals.
+2. In the first and second terminal, run `python consumer.py`. (You now have TWO consumers listening).
+3. In the third terminal, run `python producer.py` to start spamming messages.
+4. Watch the two consumer terminals. You will notice that RabbitMQ automatically distributes the messages evenly between Consumer A and Consumer B, preventing either from doing all the work.
+
+### 2. Queue Accumulation and Retention
+To observe how messages wait in the queue when no one is listening:
+1. Run `python producer.py` and let it generate and send it.
+2. Stop the **Producer**
+3. Keep the **Consumer** closed / terminated completely. The messages are now patiently waiting inside the `traffic-events-queue`.
+4. Run `python consumer.py` to start the consumer.
+5. You will see the consumer instantly "catch up" and process all the accumulated messages back-to-back until the queue is empty.

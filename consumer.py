@@ -12,7 +12,7 @@ def create_connection():
         port=5672,
         credentials=credentials
     )
-    # credentials = pika.PlainCredentials('alumno1', 'alumno1')
+    # credentials = pika.PlainCredentials('', '')
     # parameters = pika.ConnectionParameters(
     #     host='34.30.170.15',
     #     port=5672,

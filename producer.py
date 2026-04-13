@@ -13,7 +13,7 @@ def create_connection():
         port=5672,
         credentials=credentials
     )
-    # credentials = pika.PlainCredentials('alumno1', 'alumno1')
+    # credentials = pika.PlainCredentials('', '')
     # parameters = pika.ConnectionParameters(
     #     host='34.30.170.15',
     #     port=5672,
@@ -62,6 +62,9 @@ def main():
     print("[*] Generating and sending traffic events...")
     
     try:
+        # Previously, when using the Cloud connection, we only sent
+        # one message to avoid spamming the remote server unnecessarily:
+        #
         # message = {
         #     "nombre": "Gabriel Mendoza",
         #     "materia": "SA 4"
@@ -75,7 +78,8 @@ def main():
         #         content_type='application/json'
         #     )
         # )
-
+        # Now, to simulate queue accumulation and consumer distribution, 
+        # we spam multiple messages locally using a loop.
         while True:
             event = generate_traffic_event()
             
